@@ -28,6 +28,10 @@ class App extends Component {
         })
     }
 
+    addItem = (employee) => {
+        this.setState(({data}) => ({data: [...data, employee]}));
+    }
+
     render() {
         const { data } = this.state;
 
@@ -43,7 +47,7 @@ class App extends Component {
                 <EmployeesList 
                     onDelete={this.deleteItem}
                     data={data}/>
-                <EmployeesAddForm />
+                <EmployeesAddForm onAdd={this.addItem}/>
             </div>
         );
     }
