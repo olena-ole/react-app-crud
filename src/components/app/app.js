@@ -17,6 +17,8 @@ class App extends Component {
                 {name: 'Alex W.', salary: 3000, increase: false, id: 2, rise: true},
                 {name: 'Carl T.', salary: 5000, increase: true, id: 3, rise: false}
             ],
+            salaryOver1000Filter: true,
+            riseFilter: true,
             term: ''
         }
     }
@@ -62,11 +64,34 @@ class App extends Component {
         this.setState({term});
     }
 
+    onFilterRise = () => {
+        this.setState(({riseFilter}) => ({riseFilter: !riseFilter}));
+    }
+
+    onFilterSalary = () => {
+        this.setState(({salaryOver1000Filter}) => ({salaryOver1000Filter: !salaryOver1000Filter}));
+    }
+
+    onResetFilters = () => {
+        this.setState({
+            salaryOver1000Filter: false,
+            riseFilter: false
+        })
+    }
+
     render() {
-        const { data, term } = this.state;
+        const { data, term, riseFilter, salaryOver1000Filter } = this.state;
         const employeesTotal = data.length;
         const employeesIncrease = data.filter(item => item.increase).length;
-        const visibleData = this.searchEmployee(data, term);
+        let visibleData = this.searchEmployee(data, term);
+
+        if (riseFilter) {
+            visibleData = visibleData.filter(item => item.rise);
+        }
+
+        if (salaryOver1000Filter) {
+            visibleData = visibleData.filter(item => item.salary > 1000);
+        }
 
         return (
             <div className="app">
@@ -76,7 +101,10 @@ class App extends Component {
 
                 <div className="search-panel">
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <AppFilter />
+                    <AppFilter 
+                        onFilterRise={this.onFilterRise}
+                        onFilterSalary={this.onFilterSalary}
+                        onResetFilters={this.onResetFilters}/>
                 </div>
 
                 <EmployeesList 
