@@ -102,6 +102,8 @@ class App extends Component {
                 <div className="search-panel">
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
                     <AppFilter 
+                        isRiseFilter={riseFilter}
+                        isSalaryFilter={salaryOver1000Filter}
                         onFilterRise={this.onFilterRise}
                         onFilterSalary={this.onFilterSalary}
                         onResetFilters={this.onResetFilters}/>

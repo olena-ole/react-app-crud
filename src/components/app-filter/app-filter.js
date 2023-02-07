@@ -1,6 +1,7 @@
 import './app-filter.css';
 
-const AppFilter = ({onResetFilters, onFilterRise, onFilterSalary}) => {
+const AppFilter = (props) => {
+    const {onResetFilters, onFilterRise, onFilterSalary, isRiseFilter, isSalaryFilter} = props;
     return (
         <div className="btn-group">
             <button 
@@ -10,13 +11,13 @@ const AppFilter = ({onResetFilters, onFilterRise, onFilterSalary}) => {
                 All Employees
             </button>
             <button 
-            className="btn btn-outline-light"
+            className={`btn ${isRiseFilter ? 'btn-outline-light' : 'btn-outline-dark'}`}
             type="button"
             onClick={onFilterRise}>
                 Getting Promotion
             </button>
             <button 
-            className="btn btn-outline-light"
+            className={`btn ${isSalaryFilter ? 'btn-outline-light' : 'btn-outline-dark'}`}
             type="button"
             onClick={onFilterSalary}>
                 Salary Over $1000
