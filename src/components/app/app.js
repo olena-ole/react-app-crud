@@ -17,8 +17,9 @@ class App extends Component {
                 {name: 'Alex W.', salary: 3000, increase: false, id: 2, rise: true},
                 {name: 'Carl T.', salary: 5000, increase: true, id: 3, rise: false}
             ],
-            salaryOver1000Filter: true,
-            riseFilter: true,
+            salaryOver1000Filter: false,
+            riseFilter: false,
+            allFilter: true,
             term: ''
         }
     }
@@ -65,22 +66,33 @@ class App extends Component {
     }
 
     onFilterRise = () => {
-        this.setState(({riseFilter}) => ({riseFilter: !riseFilter}));
+        this.setState(({riseFilter}) => { 
+            return {
+                riseFilter: !riseFilter, 
+                allFilter: false
+            }
+        });
     }
 
     onFilterSalary = () => {
-        this.setState(({salaryOver1000Filter}) => ({salaryOver1000Filter: !salaryOver1000Filter}));
+        this.setState(({salaryOver1000Filter}) => {
+            return {
+                salaryOver1000Filter: !salaryOver1000Filter, 
+                allFilter: false
+            }
+        });
     }
 
     onResetFilters = () => {
         this.setState({
+            allFilter: true,
             salaryOver1000Filter: false,
             riseFilter: false
         })
     }
 
     render() {
-        const { data, term, riseFilter, salaryOver1000Filter } = this.state;
+        const { data, term, riseFilter, salaryOver1000Filter, allFilter } = this.state;
         const employeesTotal = data.length;
         const employeesIncrease = data.filter(item => item.increase).length;
         let visibleData = this.searchEmployee(data, term);
@@ -102,6 +114,7 @@ class App extends Component {
                 <div className="search-panel">
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
                     <AppFilter 
+                        isAllFilter={allFilter}
                         isRiseFilter={riseFilter}
                         isSalaryFilter={salaryOver1000Filter}
                         onFilterRise={this.onFilterRise}
