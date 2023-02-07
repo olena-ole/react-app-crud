@@ -6,12 +6,20 @@ const EmployeesListItem = (props) => {
     const classes = `list-group-item d-flex justify-content-between 
                     ${rise && 'like'} 
                     ${increase && 'increase'}`;
+    
+    function handleEnterPress(e) {
+        if (e.keyCode == 13) {
+            onToggleRise();
+        }
+    }
 
     return (
         <li className={classes}>
             <span 
+                tabIndex={0}
                 className="list-group-item-label"
-                onClick={onToggleRise}>
+                onClick={onToggleRise}
+                onKeyDown={handleEnterPress}>
                     {name}
             </span>
             <input type="text" className="list-group-item-input" defaultValue={`${salary}$`}/>
